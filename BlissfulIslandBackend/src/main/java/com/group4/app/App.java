@@ -1,5 +1,10 @@
 package com.group4.app;
 
+import com.group4.controllers.AccountController;
+import com.group4.daos.AccountDAO;
+import com.group4.daos.AccountDAOPostgres;
+import com.group4.services.AccountService;
+import com.group4.services.AccountServiceImpl;
 import io.javalin.Javalin;
 
 public class App {
@@ -9,28 +14,30 @@ public class App {
             config.enableDevLogging();
         });
 
-        // DAO/service/controller variables here
+        AccountDAO accountDAO = new AccountDAOPostgres();
+        AccountService accountService = new AccountServiceImpl(accountDAO);
+        AccountController accountController = new AccountController(accountService);
 
-        app.get("/accounts/manager", null);
-        app.get("/accounts/tenant", null);
-        app.get("/accounts/:id", null);
-        app.get("/accounts", null);
-        app.post("/accounts", null);
-        app.patch("/accounts/:id", null);
-        app.delete("/account/:id", null);
+        app.post("/accounts", accountController.createAccount);
+        app.get("/accounts/:id", accountController.getAccountById);
+        app.get("/accounts", accountController.getAllAccounts);
+        app.get("/accounts/manager", accountController.getAllManagerAccounts);
+        app.get("/accounts/tenant", accountController.getAllTenantAccounts);
+        app.patch("/accounts/:id", accountController.updateAccount);
+        app.delete("/accounts/:id", accountController.deleteAccount);
 
-        app.post("/login", null);
-
-        app.get("/messages", null);
-        app.get("/messages/:id", null);
-        app.post("/messages", null);
-
-        app.get("/units", null);
-        app.get("/units/:id", null);
-
-        app.get("/types", null);
-        app.get("/types/:id", null);
-        app.get("/types/availability", null);
+//        app.post("/login", null);
+//
+//        app.get("/messages", null);
+//        app.get("/messages/:id", null);
+//        app.post("/messages", null);
+//
+//        app.get("/units", null);
+//        app.get("/units/:id", null);
+//
+//        app.get("/types", null);
+//        app.get("/types/:id", null);
+//        app.get("/types/availability", null);
 
         app.start();
 
