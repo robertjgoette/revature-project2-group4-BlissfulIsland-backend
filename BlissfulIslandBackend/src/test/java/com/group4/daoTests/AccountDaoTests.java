@@ -29,8 +29,8 @@ public class AccountDaoTests {
 
     @Test
     void getAccountById(){
-        Account testGetAccount = accountDAO.getAccountById(knownWorkingId);
-        Assert.assertEquals(testGetAccount.getAccountID(), knownWorkingId);
+        Account testGetAccount = accountDAO.getAccountById(knownWorkingId + 1);
+        Assert.assertEquals(testGetAccount.getAccountID(), knownWorkingId + 1);
     }
 
     @Test

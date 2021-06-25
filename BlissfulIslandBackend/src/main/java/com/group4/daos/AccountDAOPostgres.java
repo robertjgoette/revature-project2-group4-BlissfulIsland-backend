@@ -27,11 +27,10 @@ public class AccountDAOPostgres implements AccountDAO{
                 account.setAccountID(newId);
             }
             else{
-                throw new RuntimeException("Could not set account ID because it was not returned");
+                throw new RuntimeException("An error occurred while attempting to insert the account into the table");
             }
             return account;
-        }
-        catch (SQLException sqlException){
+        }catch (SQLException sqlException){
             sqlException.printStackTrace();
             return null;
         }
@@ -72,18 +71,18 @@ public class AccountDAOPostgres implements AccountDAO{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             List<Account> accountList = new ArrayList<>();
-          while(rs.next()){
-              int accountID = rs.getInt(1);
-              String email = rs.getString(2);
-              String password = rs.getString(3);
-              String firstName = rs.getString(4);
-              String lastName = rs.getString(5);
-              int accountType = rs.getInt(6);
-              int unitID = rs.getInt(7);
+            while(rs.next()){
+                int accountID = rs.getInt(1);
+                String email = rs.getString(2);
+                String password = rs.getString(3);
+                String firstName = rs.getString(4);
+                String lastName = rs.getString(5);
+                int accountType = rs.getInt(6);
+                int unitID = rs.getInt(7);
 
-              Account account = new Account(accountID, email, password, firstName, lastName, unitID, accountType);
-              accountList.add(account);
-          }
+                Account account = new Account(accountID, email, password, firstName, lastName, unitID, accountType);
+                accountList.add(account);
+            }
             return accountList;
         }catch(SQLException sqlException){
             sqlException.printStackTrace();
@@ -173,8 +172,7 @@ public class AccountDAOPostgres implements AccountDAO{
                 throw new RuntimeException("Could not set account ID because it was not returned");
             }
             return returnedAccount;
-        }
-        catch (SQLException sqlException){
+        }catch (SQLException sqlException){
             sqlException.printStackTrace();
             return null;
         }
@@ -182,6 +180,15 @@ public class AccountDAOPostgres implements AccountDAO{
 
     @Override
     public boolean deleteAccountById(int id) {
-        return false;
+        try(Connection connection = ConnectionUtil.createConnection()) {
+            String sql = "delete from account where account_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            return true;
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+            return false;
+        }
     }
 }
