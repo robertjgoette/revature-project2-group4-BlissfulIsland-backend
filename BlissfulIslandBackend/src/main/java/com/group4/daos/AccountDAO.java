@@ -12,7 +12,7 @@ public interface AccountDAO {
     List<Account> getAllManagerAccounts();
     List<Account> getAllTenantAccounts();
 
-    Account updateAccountById(int id, Account account);
+    Account updateAccount(Account account);
 
     boolean deleteAccountById(int id);
 }
