@@ -1,5 +1,6 @@
 package com.group4.daotests;
 import com.group4.daos.UnitDao;
+import com.group4.daos.UnitDaoPostgres;
 import com.group4.entities.Unit;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -7,10 +8,10 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class UnitDaoTests {
-    static UnitDao unitDao = null;
+    static UnitDao unitDao = new UnitDaoPostgres();
     @Test(priority = 1)
     void getUnitById(){
-        Unit unit = unitDao.getUnitById(1);
+        Unit unit = unitDao.getUnitById(2);
         Assert.assertEquals(unit.getApartmentNumber(), 101);
     }
     @Test(priority = 2)
