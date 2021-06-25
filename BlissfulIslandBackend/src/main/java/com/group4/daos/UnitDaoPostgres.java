@@ -1,6 +1,7 @@
 package com.group4.daos;
 
 import com.group4.entities.Unit;
+import com.group4.exceptions.ResourceNotFound;
 import com.group4.utils.ConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
