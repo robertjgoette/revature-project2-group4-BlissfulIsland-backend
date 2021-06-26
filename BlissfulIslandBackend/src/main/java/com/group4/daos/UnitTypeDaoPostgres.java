@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UnitTypeDaoPostgres implements UnitTypeDAO{
 
@@ -39,11 +38,11 @@ public class UnitTypeDaoPostgres implements UnitTypeDAO{
     }
 
     @Override
-    public Type getUnitTypeById(int type_id) {
+    public Type getUnitTypeById(int id) {
         try(Connection connection = ConnectionUtil.createConnection()) {
-            String sql = "select * from unit_type where type_id =?";
+            String sql = "select * from unit_type where type_id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1,type_id);
+            ps.setInt(1,id);
 
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -66,7 +65,8 @@ public class UnitTypeDaoPostgres implements UnitTypeDAO{
     }
 
     @Override
-    public Map<String, Integer> getAvailableUnitTypes() throws SQLException {
+    public ArrayList<HashMap<String, Object>> getAvailableUnitTypes() {
+
         try(Connection connection = ConnectionUtil.createConnection()){
             String sql = "select unit_type.type_name, unit_type.type_id, count(unit.type_id ) as available,\n" +
                     "(select count(unit.type_id) from unit where unit.type_id = unit_type.type_id) as total_unit\n" +
@@ -76,21 +76,25 @@ public class UnitTypeDaoPostgres implements UnitTypeDAO{
                     "group by unit_type.type_name, unit_type.type_id  ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            ResultSetMetaData data= rs.getMetaData();
-            for(int i =0;i<data.getColumnCount();i++){
-                System.out.println(data.getColumnName(i));
-            }
 
-           // Map<String, Integer> availableUnits = new HashMap<>();
+
+            ArrayList<HashMap<String, Object>> reports = new ArrayList<HashMap<String, Object>>();
             while (rs.next()){
-               // availableUnits.put(rs.getString("unit"), 1);
+                HashMap<String, Object> availableUnits = new HashMap<>();
 
+                availableUnits.put("typeName",rs.getString("type_name"));
+                availableUnits.put("typeId", rs.getInt("type_id"));
+                availableUnits.put("available", rs.getInt("available"));
+                availableUnits.put("totalUnitPerType", rs.getInt("total_unit"));
+
+                reports.add(availableUnits);
 
             }
-
-
-
+            return reports;
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return null;
         }
-        return null;
+
     }
 }

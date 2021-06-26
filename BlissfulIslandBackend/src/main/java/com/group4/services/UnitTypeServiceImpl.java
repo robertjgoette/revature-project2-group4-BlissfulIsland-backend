@@ -4,8 +4,9 @@ import com.group4.daos.UnitTypeDAO;
 import com.group4.entities.Type;
 import com.group4.exceptions.ResourceNotFound;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UnitTypeServiceImpl implements UnitTypeService{
 
@@ -25,7 +26,8 @@ public class UnitTypeServiceImpl implements UnitTypeService{
     }
 
     @Override
-    public Map<Integer, String> getAvailableUnitTypes() {
-        return null;
+    public ArrayList<HashMap<String, Object>> getAvailableUnitTypes() {
+
+        return this.unitTypeDAO.getAvailableUnitTypes();
     }
 }
