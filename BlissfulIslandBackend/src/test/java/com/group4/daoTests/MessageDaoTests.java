@@ -1,4 +1,4 @@
-package com.group4.daotests;
+package com.group4.daoTests;
 import com.group4.daos.MessageDao;
 import com.group4.daos.MessageDaoPostgres;
 import com.group4.entities.Message;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 
-public class MessageDaoTest {
+public class MessageDaoTests {
     static MessageDao messageDao = new MessageDaoPostgres();
 
     /*Successfully add a new message*/

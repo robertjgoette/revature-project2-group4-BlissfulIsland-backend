@@ -11,9 +11,11 @@ import java.util.List;
 public class UnitController {
 
     private UnitService unitService;
+
     public UnitController(UnitService unitService){
         this.unitService = unitService;
     }
+
     public Handler getAllUnits = ctx ->{
         List<Unit> units;
         units = this.unitService.getAllUnits();

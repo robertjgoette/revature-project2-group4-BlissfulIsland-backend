@@ -7,7 +7,11 @@ import com.group4.entities.Unit;
 import java.util.List;
 
 public class UnitServiceImpl implements UnitService {
-    private UnitDao unitDao = new UnitDaoPostgres();
+    private UnitDao unitDao;
+
+    public UnitServiceImpl(UnitDao unitDao) {
+        this.unitDao = unitDao;
+    }
 
     @Override
     public Unit getUnitById(int id) {
