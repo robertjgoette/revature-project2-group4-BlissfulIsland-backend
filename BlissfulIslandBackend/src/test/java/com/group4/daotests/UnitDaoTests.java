@@ -1,4 +1,4 @@
-package com.group4.daotests;
+package com.group4.daoTests;
 import com.group4.daos.UnitDao;
 import com.group4.daos.UnitDaoPostgres;
 import com.group4.entities.Unit;
