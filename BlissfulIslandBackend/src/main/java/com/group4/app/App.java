@@ -1,10 +1,15 @@
 package com.group4.app;
 
 import com.group4.controllers.AccountController;
+import com.group4.controllers.UnitTypeController;
 import com.group4.daos.AccountDAO;
 import com.group4.daos.AccountDAOPostgres;
+import com.group4.daos.UnitTypeDAO;
+import com.group4.daos.UnitTypeDaoPostgres;
 import com.group4.services.AccountService;
 import com.group4.services.AccountServiceImpl;
+import com.group4.services.UnitTypeService;
+import com.group4.services.UnitTypeServiceImpl;
 import io.javalin.Javalin;
 
 public class App {
@@ -17,6 +22,10 @@ public class App {
         AccountDAO accountDAO = new AccountDAOPostgres();
         AccountService accountService = new AccountServiceImpl(accountDAO);
         AccountController accountController = new AccountController(accountService);
+
+        UnitTypeDAO unitTypeDAO = new UnitTypeDaoPostgres();
+        UnitTypeService unitTypeService = new UnitTypeServiceImpl(unitTypeDAO);
+        UnitTypeController unitTypeController = new UnitTypeController(unitTypeService);
 
         app.post("/accounts", accountController.createAccount);
         app.get("/accounts/:id", accountController.getAccountById);
@@ -35,9 +44,9 @@ public class App {
 //        app.get("/units", null);
 //        app.get("/units/:id", null);
 //
-//        app.get("/types", null);
-//        app.get("/types/:id", null);
-//        app.get("/types/availability", null);
+        app.get("/types",unitTypeController.getAllUnitTypes );
+        app.get("/types/:id", unitTypeController.getUnitTypeById);
+        app.get("/typesAvailability", unitTypeController.getAvailableUnitTypes);
 
         app.start();
 
