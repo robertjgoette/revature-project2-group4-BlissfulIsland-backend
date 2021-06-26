@@ -8,7 +8,11 @@ import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
 
-    AccountDAO accountDAO = new AccountDAOPostgres();
+    AccountDAO accountDAO;
+
+    public AccountServiceImpl(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
+    }
 
     @Override
     public Account createAccount(Account account) {

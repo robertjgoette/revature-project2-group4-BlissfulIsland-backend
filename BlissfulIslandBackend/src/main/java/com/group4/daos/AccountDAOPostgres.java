@@ -185,7 +185,13 @@ public class AccountDAOPostgres implements AccountDAO{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
-            return true;
+            try{
+                this.getAccountById(id);
+            }
+            catch (ResourceNotFound resourceNotFound){
+                return true;
+            }
+            return false;
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
             return false;
