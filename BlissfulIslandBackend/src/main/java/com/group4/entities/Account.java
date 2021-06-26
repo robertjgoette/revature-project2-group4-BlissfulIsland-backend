@@ -7,6 +7,7 @@ public class Account {
     private String firstName;
     private String lastName;
     private int unitID;
+    // 0 is tenant, 1 is manager, 2 is admin
     private int accountType;
 
     public Account(int accountID, String email, String password, String firstName, String lastName, int unitID, int accountType) {
