@@ -4,9 +4,9 @@ import com.group4.entities.Message;
 import java.util.List;
 
 public interface MessageDao {
-    public Message getMessageById(int Id);
+    Message getMessageById(int Id);
 
-    public List<Message> getAllMessages();
+    List<Message> getAllMessages();
 
-    public Message createMessageById(Message message);
+    Message createMessageById(Message message);
 }
