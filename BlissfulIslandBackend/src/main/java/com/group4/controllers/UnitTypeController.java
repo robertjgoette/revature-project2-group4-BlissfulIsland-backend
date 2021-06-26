@@ -48,5 +48,4 @@ public class UnitTypeController {
         ctx.contentType("application/json");
 
     };
-
 }

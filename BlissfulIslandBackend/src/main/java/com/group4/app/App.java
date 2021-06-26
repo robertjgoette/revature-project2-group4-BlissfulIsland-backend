@@ -1,15 +1,13 @@
 package com.group4.app;
 
 import com.group4.controllers.AccountController;
+
 import com.group4.controllers.UnitTypeController;
-import com.group4.daos.AccountDAO;
-import com.group4.daos.AccountDAOPostgres;
-import com.group4.daos.UnitTypeDAO;
-import com.group4.daos.UnitTypeDaoPostgres;
-import com.group4.services.AccountService;
-import com.group4.services.AccountServiceImpl;
-import com.group4.services.UnitTypeService;
-import com.group4.services.UnitTypeServiceImpl;
+
+import com.group4.controllers.LoginController;
+import com.group4.daos.*;
+import com.group4.services.*;
+
 import io.javalin.Javalin;
 
 public class App {
@@ -26,6 +24,10 @@ public class App {
         UnitTypeDAO unitTypeDAO = new UnitTypeDaoPostgres();
         UnitTypeService unitTypeService = new UnitTypeServiceImpl(unitTypeDAO);
         UnitTypeController unitTypeController = new UnitTypeController(unitTypeService);
+      
+        LoginDAO loginDAO = new LoginDAOPostgres();
+        LoginService loginService = new LoginServiceImpl(loginDAO);
+        LoginController loginController = new LoginController(loginService);
 
         app.post("/accounts", accountController.createAccount);
         app.get("/accounts/:id", accountController.getAccountById);
@@ -35,14 +37,14 @@ public class App {
         app.patch("/accounts/:id", accountController.updateAccount);
         app.delete("/accounts/:id", accountController.deleteAccount);
 
-//        app.post("/login", null);
-//
+        app.post("/login", loginController.login);
+
 //        app.get("/messages", null);
 //        app.get("/messages/:id", null);
 //        app.post("/messages", null);
 //
-//        app.get("/units", null);
-//        app.get("/units/:id", null);
+        app.get("/units", unitController.getAllUnits);
+        app.get("/units/:id", unitController.getUnitById);
 //
         app.get("/types",unitTypeController.getAllUnitTypes );
         app.get("/types/:id", unitTypeController.getUnitTypeById);

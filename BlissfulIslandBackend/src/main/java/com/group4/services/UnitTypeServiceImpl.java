@@ -1,18 +1,16 @@
-
 package com.group4.services;
 
-        import com.group4.daos.UnitTypeDAO;
-        import com.group4.entities.Type;
-        import com.group4.exceptions.ResourceNotFound;
+import com.group4.daos.UnitTypeDAO;
+import com.group4.entities.Type;
+import com.group4.exceptions.ResourceNotFound;
 
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class UnitTypeServiceImpl implements UnitTypeService{
 
     private UnitTypeDAO unitTypeDAO = null;
-
 
     public UnitTypeServiceImpl(UnitTypeDAO unitTypeDAO){
         this.unitTypeDAO = unitTypeDAO;
