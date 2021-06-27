@@ -1,5 +1,9 @@
 package com.group4.entities;
 
+import com.group4.exceptions.DaoFailureException;
+
+import java.sql.SQLException;
+
 public class Message {
     private int messageID;
     private int senderID;
@@ -8,6 +12,15 @@ public class Message {
     private long timeSent;
     private int messageType;
 
+    /**
+     * Construct a Message
+     * @param messageID
+     * @param senderID
+     * @param receiverID
+     * @param messageBody
+     * @param timeSent
+     * @param messageType
+     */
     public Message(int messageID, int senderID, int receiverID, String messageBody, long timeSent, int messageType) {
         this.messageID = messageID;
         this.senderID = senderID;

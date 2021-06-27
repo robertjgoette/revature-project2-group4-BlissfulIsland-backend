@@ -1,7 +1,7 @@
 package com.group4.app;
 
 import com.group4.controllers.AccountController;
-
+import com.group4.controllers.MessageController;
 import com.group4.controllers.UnitTypeController;
 
 import com.group4.controllers.LoginController;
@@ -21,6 +21,10 @@ public class App {
         AccountService accountService = new AccountServiceImpl(accountDAO);
         AccountController accountController = new AccountController(accountService);
 
+        MessageDao messageDao = new MessageDaoPostgres();
+        MessageService messageService = new MessageServiceImpl(messageDao, accountDAO);
+        MessageController messageController = new MessageController(messageService);
+
         UnitTypeDAO unitTypeDAO = new UnitTypeDaoPostgres();
         UnitTypeService unitTypeService = new UnitTypeServiceImpl(unitTypeDAO);
         UnitTypeController unitTypeController = new UnitTypeController(unitTypeService);
@@ -39,13 +43,13 @@ public class App {
 
         app.post("/login", loginController.login);
 
-//        app.get("/messages", null);
-//        app.get("/messages/:id", null);
-//        app.post("/messages", null);
-//
-        app.get("/units", unitController.getAllUnits);
-        app.get("/units/:id", unitController.getUnitById);
-//
+        app.get("/messages", messageController.getAllMessages);
+        app.get("/messages/:id", messageController.getMessageById);
+        app.post("/messages", messageController.createMessage);
+
+//        app.get("/units", unitController.getAllUnits);
+//        app.get("/units/:id", unitController.getUnitById);
+
         app.get("/types",unitTypeController.getAllUnitTypes );
         app.get("/types/:id", unitTypeController.getUnitTypeById);
         app.get("/typesAvailability", unitTypeController.getAvailableUnitTypes);
