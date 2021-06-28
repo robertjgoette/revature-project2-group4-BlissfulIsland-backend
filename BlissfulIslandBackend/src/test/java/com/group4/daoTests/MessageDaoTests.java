@@ -16,7 +16,7 @@ public class MessageDaoTests {
     @Test(priority = 2)
     void createNewMessageSuccess(){
         Message testMessage = new Message(0, 58, 59, "Test Message", 0, 1);
-        Message result = messageDao.createMessageById(testMessage);
+        Message result = messageDao.createMessage(testMessage);
         Assert.assertNotEquals(result.getMessageID(), 0);
     }
 
@@ -25,7 +25,7 @@ public class MessageDaoTests {
     void createNewMessageFailSenderNotExist(){
         try {
             Message testMessage = new Message(0, 888888, 1, "Test Message", 0, 1);
-            Message result = messageDao.createMessageById(testMessage);
+            Message result = messageDao.createMessage(testMessage);
             Assert.assertFalse(true);
         }catch (DaoFailureException messageNotFoundException) {
             Assert.assertTrue(true);
@@ -37,7 +37,7 @@ public class MessageDaoTests {
     void createNewMessageFailReceiverNotExist(){
         try {
             Message testMessage = new Message(0, 888888, 1, "Test Message", 0, 1);
-            Message result = messageDao.createMessageById(testMessage);
+            Message result = messageDao.createMessage(testMessage);
             Assert.assertFalse(true);
         }catch (DaoFailureException messageNotFoundException) {
             Assert.assertTrue(true);
@@ -48,7 +48,7 @@ public class MessageDaoTests {
     void createNewMessageFailEmptyBody(){
         try {
             Message testMessage = new Message(0, 888888, 1, "", 0, 1);
-            Message result = messageDao.createMessageById(testMessage);
+            Message result = messageDao.createMessage(testMessage);
             Assert.assertFalse(true);
         }catch (DaoFailureException messageNotFoundException) {
             Assert.assertTrue(true);

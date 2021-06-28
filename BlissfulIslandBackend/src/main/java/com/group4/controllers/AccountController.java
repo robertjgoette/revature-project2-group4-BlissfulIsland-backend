@@ -66,6 +66,4 @@ public class AccountController {
             ctx.status(404);
         }
     };
-
-
 }

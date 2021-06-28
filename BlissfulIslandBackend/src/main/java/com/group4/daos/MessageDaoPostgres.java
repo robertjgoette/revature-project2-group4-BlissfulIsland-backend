@@ -13,7 +13,32 @@ import com.group4.exceptions.DaoFailureException;
 
 public class MessageDaoPostgres implements MessageDao{
     @Override
-    public Message createMessageById(Message message) {
+    public List<Message> getAllMessages() {
+        try(Connection connection = ConnectionUtil.createConnection()){
+            String sql = "select * from message";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Message> messages = new ArrayList<>();
+
+            while(rs.next()){
+                Message message = new Message();
+                message.setMessageID(rs.getInt("message_id"));
+                message.setSenderID(rs.getInt("sender_id"));
+                message.setReceiverID(rs.getInt("receiver_id"));
+                message.setMessageBody(rs.getString("message_body"));
+                message.setTimeSent(rs.getLong("message_time_sent"));
+                message.setMessageType(rs.getInt("message_type"));
+                messages.add(message);
+            }
+            return messages;
+        }catch(SQLException sqlException){
+            throw new DaoFailureException(sqlException.getMessage(), 404, "Could not get messages.");
+        }
+    }
+
+    @Override
+    public Message createMessage(Message message) {
         try(Connection connection = ConnectionUtil.createConnection()){
         String sql = "insert into message values(default, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -59,30 +84,5 @@ public class MessageDaoPostgres implements MessageDao{
                      "Message not found"
              );
          }
-    }
-
-    @Override
-    public List<Message> getAllMessages() {
-        try(Connection connection = ConnectionUtil.createConnection()){
-            String sql = "select * from message";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            List<Message> messages = new ArrayList<>();
-
-            while(rs.next()){
-                Message message = new Message();
-                message.setMessageID(rs.getInt("message_id"));
-                message.setSenderID(rs.getInt("sender_id"));
-                message.setReceiverID(rs.getInt("receiver_id"));
-                message.setMessageBody(rs.getString("message_body"));
-                message.setTimeSent(rs.getLong("message_time_sent"));
-                message.setMessageType(rs.getInt("message_type"));
-                messages.add(message);
-            }
-            return messages;
-        }catch(SQLException sqlException){
-            throw new DaoFailureException(sqlException.getMessage(), 404, "Could not get messages.");
-        }
     }
 }
