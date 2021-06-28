@@ -1,10 +1,7 @@
 package com.group4.app;
 
-import com.group4.controllers.AccountController;
-import com.group4.controllers.MessageController;
-import com.group4.controllers.UnitTypeController;
+import com.group4.controllers.*;
 
-import com.group4.controllers.LoginController;
 import com.group4.daos.*;
 import com.group4.services.*;
 
@@ -33,6 +30,10 @@ public class App {
         LoginService loginService = new LoginServiceImpl(loginDAO);
         LoginController loginController = new LoginController(loginService);
 
+        UnitDao unitDao = new UnitDaoPostgres();
+        UnitService unitService = new UnitServiceImpl(unitDao);
+        UnitController unitController = new UnitController(unitService);
+
         app.post("/accounts", accountController.createAccount);
         app.get("/accounts/:id", accountController.getAccountById);
         app.get("/accounts", accountController.getAllAccounts);
@@ -47,8 +48,8 @@ public class App {
         app.get("/messages/:id", messageController.getMessageById);
         app.post("/messages", messageController.createMessage);
 
-//        app.get("/units", unitController.getAllUnits);
-//        app.get("/units/:id", unitController.getUnitById);
+        app.get("/units", unitController.getAllUnits);
+        app.get("/units/:id", unitController.getUnitById);
 
         app.get("/types",unitTypeController.getAllUnitTypes );
         app.get("/types/:id", unitTypeController.getUnitTypeById);
