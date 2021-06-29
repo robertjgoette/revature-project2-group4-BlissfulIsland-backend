@@ -41,6 +41,7 @@ public class MessageController {
             ctx.status(e.getStatusCode());
             ctx.contentType("application/json");
         }catch(Exception e){
+            e.printStackTrace();
             ctx.result("Server error");
             ctx.status(500);
             ctx.contentType("application/json");
