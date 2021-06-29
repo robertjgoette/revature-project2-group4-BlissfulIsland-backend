@@ -42,10 +42,11 @@ public class MessageDaoPostgres implements MessageDao{
         try(Connection connection = ConnectionUtil.createConnection()){
         String sql = "insert into message values(default, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        long time = Instant.now().toEpochMilli();
         ps.setInt(1, message.getSenderID());
         ps.setInt(2, message.getReceiverID());
         ps.setString(3, message.getMessageBody());
-        ps.setLong(4, Instant.now().toEpochMilli());
+        ps.setLong(4, time);
         ps.setInt(5, message.getMessageType());
 
         ps.execute();
@@ -54,6 +55,7 @@ public class MessageDaoPostgres implements MessageDao{
 
         int key = rs.getInt("message_id");
         message.setMessageID(key);
+        message.setTimeSent(time);
         return message;
         }catch(SQLException sqlException){
             throw new DaoFailureException(sqlException.getMessage(), 404, "Cannot create new message");
