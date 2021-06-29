@@ -51,7 +51,7 @@ public class App {
         app.get("/units", unitController.getAllUnits);
         app.get("/units/:id", unitController.getUnitById);
 
-        app.get("/types",unitTypeController.getAllUnitTypes );
+        app.get("/types",unitTypeController.getAllUnitTypes);
         app.get("/types/:id", unitTypeController.getUnitTypeById);
         app.get("/typesAvailability", unitTypeController.getAvailableUnitTypes);
 
