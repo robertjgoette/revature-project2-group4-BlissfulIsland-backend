@@ -35,10 +35,10 @@ public class App {
         UnitController unitController = new UnitController(unitService);
 
         app.post("/accounts", accountController.createAccount);
-        app.get("/accounts/:id", accountController.getAccountById);
         app.get("/accounts", accountController.getAllAccounts);
         app.get("/accounts/manager", accountController.getAllManagerAccounts);
         app.get("/accounts/tenant", accountController.getAllTenantAccounts);
+        app.get("/accounts/:id", accountController.getAccountById);
         app.patch("/accounts/:id", accountController.updateAccount);
         app.delete("/accounts/:id", accountController.deleteAccount);
 
@@ -51,7 +51,7 @@ public class App {
         app.get("/units", unitController.getAllUnits);
         app.get("/units/:id", unitController.getUnitById);
 
-        app.get("/types",unitTypeController.getAllUnitTypes );
+        app.get("/types",unitTypeController.getAllUnitTypes);
         app.get("/types/:id", unitTypeController.getUnitTypeById);
         app.get("/typesAvailability", unitTypeController.getAvailableUnitTypes);
 
