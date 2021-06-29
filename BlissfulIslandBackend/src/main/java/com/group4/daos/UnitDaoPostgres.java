@@ -39,7 +39,7 @@ public class UnitDaoPostgres implements UnitDao {
     @Override
     public List<Unit> getAllUnits() {
         try(Connection connection = ConnectionUtil.createConnection()){
-            String sql = "select * from unit";
+            String sql = "select * from unit order by unit_id";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
