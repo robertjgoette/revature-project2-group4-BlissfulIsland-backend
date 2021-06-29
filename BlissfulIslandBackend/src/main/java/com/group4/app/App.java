@@ -35,10 +35,10 @@ public class App {
         UnitController unitController = new UnitController(unitService);
 
         app.post("/accounts", accountController.createAccount);
-        app.get("/accounts/:id", accountController.getAccountById);
         app.get("/accounts", accountController.getAllAccounts);
         app.get("/accounts/manager", accountController.getAllManagerAccounts);
         app.get("/accounts/tenant", accountController.getAllTenantAccounts);
+        app.get("/accounts/:id", accountController.getAccountById);
         app.patch("/accounts/:id", accountController.updateAccount);
         app.delete("/accounts/:id", accountController.deleteAccount);
 
