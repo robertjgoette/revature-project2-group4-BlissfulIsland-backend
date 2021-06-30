@@ -3,6 +3,7 @@ package com.group4.services;
 import com.group4.daos.AccountDAO;
 import com.group4.daos.AccountDAOPostgres;
 import com.group4.entities.Account;
+import com.group4.exceptions.ResourceNotFound;
 
 import java.util.List;
 
@@ -21,7 +22,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccountById(int id) {
-        return accountDAO.getAccountById(id);
+        try {
+            return accountDAO.getAccountById(id);
+        }
+        catch(ResourceNotFound resourceNotFound){
+            String message = resourceNotFound.getMessage();
+            return new Account(-999, message, message, message, message,-999,-999);
+        }
     }
 
     @Override

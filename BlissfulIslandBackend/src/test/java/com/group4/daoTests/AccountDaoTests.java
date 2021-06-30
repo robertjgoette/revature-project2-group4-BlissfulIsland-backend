@@ -3,6 +3,7 @@ package com.group4.daoTests;
 import com.group4.daos.AccountDAO;
 import com.group4.daos.AccountDAOPostgres;
 import com.group4.entities.Account;
+import com.group4.exceptions.ResourceNotFound;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -23,6 +24,7 @@ public class AccountDaoTests {
         Account testCreateAdmin = accountDAO.createAccount(testAdmin);
 
         knownWorkingId = testCreateTenant.getAccountID();
+        System.out.println(knownWorkingId);
 
         Assert.assertEquals(testAdmin.getFirstName(), testCreateAdmin.getFirstName());
     }
@@ -31,6 +33,15 @@ public class AccountDaoTests {
     void getAccountById(){
         Account testGetAccount = accountDAO.getAccountById(knownWorkingId + 1);
         Assert.assertEquals(testGetAccount.getAccountID(), knownWorkingId + 1);
+    }
+
+    @Test
+    void getAccountByIdNegativeTest(){
+        try {
+            accountDAO.getAccountById(-10);
+        }catch (ResourceNotFound e){
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
@@ -58,10 +69,16 @@ public class AccountDaoTests {
         Assert.assertEquals(testAccount.getFirstName(), test.getFirstName());
     }
 
-    @Test
+    @Test(dependsOnMethods = {"createAccount"})
     void deleteAccountById(){
         boolean deleteResult = accountDAO.deleteAccountById(knownWorkingId);
         Assert.assertTrue(deleteResult);
+    }
+
+    @Test
+    void deleteAccountByIdNegativeTest(){
+        boolean testBoolean = accountDAO.deleteAccountById(-10);
+        Assert.assertFalse(testBoolean);
     }
 
 
