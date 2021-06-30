@@ -181,17 +181,29 @@ public class AccountDAOPostgres implements AccountDAO{
     @Override
     public boolean deleteAccountById(int id) {
         try(Connection connection = ConnectionUtil.createConnection()) {
-            String sql = "delete from account where account_id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.execute();
             try{
                 this.getAccountById(id);
             }
             catch (ResourceNotFound resourceNotFound){
+                resourceNotFound.printStackTrace();
+                return false;
+            }
+
+            String sql = "delete from account where account_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+
+            try{
+                this.getAccountById(id);
+            }
+            catch (ResourceNotFound resourceNotFound){
+                resourceNotFound.printStackTrace();
                 return true;
             }
+
             return false;
+
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
             return false;

@@ -18,8 +18,15 @@ public class LoginController {
         LoginCredentials loginCredentials = this.gson.fromJson(ctx.body(), LoginCredentials.class);
         Account account = loginService.login(loginCredentials.getEmail(), loginCredentials.getPassword());
         String loginJSON = gson.toJson(account);
-        ctx.status(200);
-        ctx.result(loginJSON);
+
+        if(account.getAccountID() == -999){
+            ctx.result("{\"error\":\"" + account.getFirstName() + "\"}");
+            ctx.status(404);
+        }
+        else {
+            ctx.result(loginJSON);
+            ctx.status(200);
+        }
     };
 }
 

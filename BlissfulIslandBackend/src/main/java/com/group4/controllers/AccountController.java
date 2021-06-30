@@ -27,7 +27,15 @@ public class AccountController {
         int id = Integer.parseInt(ctx.pathParam("id"));
         Account account = this.accountService.getAccountById(id);
         String accountJSON = this.gson.toJson(account);
-        ctx.result(accountJSON);
+
+        if(account.getAccountID() == -999){
+            ctx.result("{\"error\":\"" + account.getFirstName() + "\"}");
+            ctx.status(404);
+        }
+        else {
+            ctx.result(accountJSON);
+            ctx.status(200);
+        }
     };
 
     public Handler getAllAccounts = (ctx) -> {
