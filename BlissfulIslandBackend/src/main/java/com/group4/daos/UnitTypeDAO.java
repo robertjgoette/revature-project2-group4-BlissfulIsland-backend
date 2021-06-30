@@ -17,8 +17,5 @@ public interface UnitTypeDAO {
     Type getUnitTypeById(int type_id);
 
     // return units type based on their availability
-    ArrayList<HashMap<String, Object>> getAvailableUnitTypes() ;
-
-
-
+    ArrayList<HashMap<String, Object>> getAvailableUnitTypes();
 }
