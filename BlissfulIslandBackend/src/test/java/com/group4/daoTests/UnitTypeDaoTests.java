@@ -20,6 +20,7 @@ public class UnitTypeDaoTests {
 
     @Test(priority = 1)
     void  getAllUnitTypesPS(){
+
         List<Type> type = unitTypeDAO.getAllUnitTypes();
         Assert.assertTrue(type.isEmpty() == false);
     }
@@ -44,10 +45,19 @@ public class UnitTypeDaoTests {
         ArrayList<HashMap<String, Object>> availableTypes;
         availableTypes = unitTypeDAO.getAvailableUnitTypes();
 
+
         for (HashMap arr: availableTypes){
+            //System.out.println(arr.get("available"));
+            if(arr.get("typeName").equals("normal")){
+
+                System.out.println(arr.get("available"));
+                Assert.assertEquals(arr.get("available"), 1);
+                Assert.assertEquals(arr.get("totalUnitPerType"), 2);
+            }
 
            Assert.assertTrue(arr.containsKey("typeName"));
 
         }
+
     }
 }
