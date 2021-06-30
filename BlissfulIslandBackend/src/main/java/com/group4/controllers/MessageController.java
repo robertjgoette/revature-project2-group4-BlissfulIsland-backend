@@ -36,9 +36,13 @@ public class MessageController {
             ctx.contentType("application/json");
 
         //exceptions
-        }catch(InvalidInputException e){
+        }catch(InvalidInputException e) {
             ctx.result(e.getMessage());
             ctx.status(e.getStatusCode());
+            ctx.contentType("application/json");
+        }catch(ResourceNotFound e){
+            ctx.result(e.getMessage());
+            ctx.status(404);
             ctx.contentType("application/json");
         }catch(Exception e){
             e.printStackTrace();

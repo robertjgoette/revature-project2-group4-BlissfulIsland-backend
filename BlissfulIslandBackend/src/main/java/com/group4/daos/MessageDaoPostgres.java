@@ -7,6 +7,9 @@ import java.sql.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.group4.exceptions.InvalidInputException;
+import com.group4.exceptions.ResourceNotFound;
 import com.group4.utils.ConnectionUtil;
 import com.group4.exceptions.DaoFailureException;
 
@@ -43,12 +46,16 @@ public class MessageDaoPostgres implements MessageDao{
         String sql = "insert into message values(default, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         long time = Instant.now().toEpochMilli();
-        ps.setInt(1, message.getSenderID());
-        ps.setInt(2, message.getReceiverID());
-        ps.setString(3, message.getMessageBody());
-        ps.setLong(4, time);
-        ps.setInt(5, message.getMessageType());
-
+        try {
+            ps.setInt(1, message.getSenderID());
+            ps.setInt(2, message.getReceiverID());
+            ps.setString(3, message.getMessageBody());
+            ps.setLong(4, time);
+            ps.setInt(5, message.getMessageType());
+        }
+        catch (NullPointerException e){
+            throw new InvalidInputException("Invalid input for message", 404);
+        }
         ps.execute();
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
