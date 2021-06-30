@@ -1,6 +1,7 @@
 package com.group4.daos;
 
 import com.group4.entities.Account;
+import com.group4.exceptions.InvalidInputException;
 import com.group4.exceptions.ResourceNotFound;
 import com.group4.utils.ConnectionUtil;
 
@@ -14,12 +15,17 @@ public class AccountDAOPostgres implements AccountDAO{
         try(Connection connection = ConnectionUtil.createConnection()){
             String sql = "insert into account values (default, ?, ?, ?, ?, ?, ?) returning account_id";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, account.getEmail());
-            ps.setString(2, account.getPassword());
-            ps.setString(3, account.getFirstName());
-            ps.setString(4, account.getLastName());
-            ps.setInt(5, account.getAccountType());
-            ps.setInt(6, account.getUnitID());
+            try {
+                ps.setString(1, account.getEmail());
+                ps.setString(2, account.getPassword());
+                ps.setString(3, account.getFirstName());
+                ps.setString(4, account.getLastName());
+                ps.setInt(5, account.getAccountType());
+                ps.setInt(6, account.getUnitID());
+            }
+            catch (NullPointerException e){
+                throw new InvalidInputException("Invalid input for account", 404);
+            }
             ps.execute();
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){

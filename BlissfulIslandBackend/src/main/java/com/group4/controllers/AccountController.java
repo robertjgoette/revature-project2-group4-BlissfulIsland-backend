@@ -19,8 +19,14 @@ public class AccountController {
         Account account = this.gson.fromJson(ctx.body(), Account.class);
         account = this.accountService.createAccount(account);
         String accountJSON = gson.toJson(account);
-        ctx.status(201);
-        ctx.result(accountJSON);
+        if(account.getAccountID() == -999){
+            ctx.result("{\"error\":\"" + account.getFirstName() + "\"}");
+            ctx.status(404);
+        }
+        else {
+            ctx.result(accountJSON);
+            ctx.status(201);
+        }
     };
 
     public Handler getAccountById = (ctx) -> {

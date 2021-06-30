@@ -36,6 +36,8 @@ public class MessageServiceImpl implements MessageService{
             return messageDao.createMessage(message);
         }catch(ResourceNotFound resourceNotFound){
             throw resourceNotFound;
+        }catch (NullPointerException nullPointerException){
+            throw new InvalidInputException("Invalid input for message", 404);
         }
     }
 
