@@ -11,7 +11,7 @@
 ## Description
 This is the server for the BlissfulIsland tenant-manager messaging system. This backend handles the requests from the [front end](https://2105batch-project2-group4.s3.us-east-2.amazonaws.com/index.html).
 
-## Technologies used
+## Technologies Used
 - Java, Javalin, PostgreSQL
 
 ## Routes 
