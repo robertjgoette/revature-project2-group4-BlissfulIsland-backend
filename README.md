@@ -15,7 +15,7 @@ This is the server for the BlissfulIsland tenant-manager messaging system. This 
 - Java, Javalin, PostgreSQL
 
 ## Routes 
-- get "/accounts" to get All Accounts
+- get "/accounts"  getAllAccounts
 - get "/accounts/manager" getAllManagerAccounts
 - get "/accounts/tenant" getAllTenantAccounts
 - get "/accounts/:id" getAccountById
