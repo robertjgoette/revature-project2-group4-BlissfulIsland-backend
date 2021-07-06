@@ -1,6 +1,6 @@
 # revature-project2-group4-BlissfulIsland
 
-## Contributers
+## Contributors
 | Name          | Role         |
 |---------------|--------------|
 | Robert Goette | Team Lead    |
