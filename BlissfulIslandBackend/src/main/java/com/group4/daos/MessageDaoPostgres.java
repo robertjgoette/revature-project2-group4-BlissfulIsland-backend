@@ -45,7 +45,7 @@ public class MessageDaoPostgres implements MessageDao{
         try(Connection connection = ConnectionUtil.createConnection()){
         String sql = "insert into message values(default, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        long time = Instant.now().toEpochMilli();
+        long time = Instant.now().getEpochSecond();
         try {
             ps.setInt(1, message.getSenderID());
             ps.setInt(2, message.getReceiverID());
