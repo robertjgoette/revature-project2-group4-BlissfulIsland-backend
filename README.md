@@ -9,7 +9,7 @@
 | Mohammad Asif | Team Member  |
 
 ## Description
-This is the server for the BlissfulIsland tenant-manager messaging system. This backend handles the requests from the [front end](https://2105batch-project2-group4.s3.us-east-2.amazonaws.com/index.html).
+This is the server for the BlissfulIsland tenant-manager messaging system. This backend handles the requests from the [front end](https://2105batch-project2-group4.s3.us-east-2.amazonaws.com/index.html). [E2E Testing](https://github.com/robertjgoette/revature-project2-group4-BlissfulIsland-E2E)
 
 ## Technologies and Services Used
 - Java, Javalin, PostgreSQL, Postman, AWS 
